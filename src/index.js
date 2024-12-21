@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TodoList from './features/todoList/TodoList';
 import TodoItem from './features/todoList/TodoItem';
 import SubHeader from './components/SubHeader';
+import AddTodoForm from './features/todoList/AddTodoForm';
 
 /*
   Preparing the React Tree into your HTML document
@@ -56,6 +57,7 @@ root.render(
           }
         />
 
+        <Route path="/add-todo" element={<AddTodoForm />} />
         <Route
           path='/todo/:itemName'
           element={<TodoItem />}

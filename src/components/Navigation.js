@@ -45,6 +45,9 @@ function Navigation(args) {
             <NavItem>
               <NavLink href='/completed-items'>Completed Items</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href='/add-todo'>Add New Item</NavLink>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
