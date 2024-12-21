@@ -31,11 +31,13 @@ function Home() {
         title='My Active List'
         showNewButton={true}
         completed={false}
+        items={['Do Laundry', 'Clean Room']}
       />
       <TodoList
         title='Completed List'
         showNewButton={false}
         completed={true}
+        items={['Take Out Trash', 'Make Dinner']}
       />
     </div>
   );

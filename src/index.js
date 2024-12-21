@@ -9,10 +9,6 @@ import { Container } from 'reactstrap';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TodoList from './features/todoList/TodoList';
 import TodoItem from './features/todoList/TodoItem';
-import {
-  allActiveItems,
-  allCompletedItems,
-} from './features/todoList/todoSplice';
 import SubHeader from './components/SubHeader';
 
 /*
@@ -40,7 +36,7 @@ root.render(
                 title='My Active List'
                 showNewButton={true}
                 completed={false}
-                items={allActiveItems}
+                items={['Do Laundry', 'Clean Room']}
               />
             </>
           }
@@ -54,7 +50,7 @@ root.render(
                 title='Completed List'
                 showNewButton={false}
                 completed={true}
-                items={allCompletedItems}
+                items={['Take Out Trash', 'Make Dinner']}
               />
             </>
           }

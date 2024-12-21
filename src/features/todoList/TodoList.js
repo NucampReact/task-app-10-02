@@ -11,7 +11,6 @@ import {
   Input,
   InputGroup,
 } from 'reactstrap';
-import { ACTIVE_ITEMS_KEY, COMPLETED_ITEMS_KEY } from './todoSplice';
 
 /*
   React State Management:
@@ -32,16 +31,12 @@ import { ACTIVE_ITEMS_KEY, COMPLETED_ITEMS_KEY } from './todoSplice';
 */
 
 // <TodoList items={[]} /> = TodoList();
-function TodoList({ title, showNewButton, completed }) {
+function TodoList({ title, showNewButton, completed, items: todoItems }) {
   const [addedItem, setAddedItem] = useState(false);
   const [newItem, setNewItem] = useState();
 
   // Get items based on active or completed
-  const [items, setItems] = useState(() => {
-    const key = completed ? COMPLETED_ITEMS_KEY : ACTIVE_ITEMS_KEY;
-    const savedItems = localStorage.getItem(key);
-    return savedItems ? JSON.parse(savedItems) : [];
-  });
+  const [items, setItems] = useState(todoItems);
 
   const addNewItem = () => {
     setAddedItem(true); // provide updated value as argument
@@ -52,9 +47,6 @@ function TodoList({ title, showNewButton, completed }) {
     const updatedItems = items.concat(newItem);
     setItems(updatedItems);
 
-    // Update local storage
-    const key = completed ? COMPLETED_ITEMS_KEY : ACTIVE_ITEMS_KEY;
-    localStorage.setItem(key, JSON.stringify(updatedItems));
     setNewItem('');
   };
 
@@ -72,8 +64,9 @@ function TodoList({ title, showNewButton, completed }) {
 
     const jsxItems = items.map(function (item) {
       return (
-        <li className={`${completedClass} list-group-item`}>
+        <li key={item} className={`${completedClass} list-group-item`}>
           <input
+            onChange={() => {}}
             className={`${checkClass} form-check-input`}
             type='checkbox'
             checked={isChecked}
