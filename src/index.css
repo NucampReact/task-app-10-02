@@ -53,3 +53,7 @@ li a {
     0 0 8px rgba(165, 59, 96, 0.6);
   outline: 0 none;
 }
+
+.bg-custom-primary {
+  background-color: #638475;
+}
