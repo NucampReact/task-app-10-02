@@ -1,10 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Col, Row, Container, Card, CardBody, CardHeader } from 'reactstrap';
 import SubHeader from '../../components/SubHeader';
 
 function TodoItem() {
   const params = useParams(); // returns an object of all the params
+
+  const tasks = useSelector(function(state) {
+    return state.tasks;
+  });
+
+  const selectedTask = tasks.find(task => task.title === params.itemName);
 
   return (
     <Container>
@@ -14,21 +21,21 @@ function TodoItem() {
         <Col sm='6'>
           <h3>Description/Directions</h3>
           <p>
-            Some description here..
+            {selectedTask.description}
           </p>
           <Row className='row-content'>
             <Col>
               <p>
                 Assigned to:
                 <br />
-                Dynamic Name
+                <strong>{selectedTask.assignee}</strong>
               </p>
             </Col>
             <Col>
               <p>
                 Due date:
                 <br />
-                Dynamic Date
+                <strong>{selectedTask.due_date}</strong>
               </p>
             </Col>
           </Row>

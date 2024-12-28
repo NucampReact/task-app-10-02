@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Card, CardBody, CardHeader, CardFooter, Form, FormGroup, Input, Label, Button } from 'reactstrap';
 
 function AddTodoForm() {
   // Capture all of the form data into our state
   const [ formData, setFormData ] = useState({});
   const [ disableButton, setDisableButton ] = useState(false);
+  const dispatcher = useDispatch();
 
   // { name: 'Do Homework', description: '', due_date: 'mm/dd/yyyy', ... }
 
@@ -31,11 +33,7 @@ function AddTodoForm() {
     // Restrict title to only 10 characters
     let regex = /^[a-zA-Z]{1,10}$/;
 
-    console.log('formData.title', formData.title);
-    
     if (!regex.test(formData.title)) {
-      console.log('failed validation');
-      
       setDisableButton(true);
     } else {
       setDisableButton(false);
@@ -49,7 +47,13 @@ function AddTodoForm() {
   }, [ formData.due_date ])
 
   const createItem = () => {
-    
+    // Send the task to redux reducer
+    const action = {
+      type: 'create-todo-item',
+      task: formData
+    };
+
+    dispatcher(action);
   };
 
   const handleInput = (event) => {

@@ -9,6 +9,7 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
+import { NavLink as RRLink } from 'react-router-dom';
 
 function Navigation(args) {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ function Navigation(args) {
         dark
         color='dark'
       >
-        <NavbarBrand href='/'>
+        <NavbarBrand tag={RRLink} to='/'>
           <img
             src='/logo-black-192.png'
             alt='TaskTamer'
@@ -40,13 +41,13 @@ function Navigation(args) {
             navbar
           >
             <NavItem>
-              <NavLink href='/active-items'>Active Items</NavLink>
+              <NavLink tag={RRLink} to='/active-items'>Active Items</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='/completed-items'>Completed Items</NavLink>
+              <NavLink tag={RRLink} to='/completed-items'>Completed Items</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='/add-todo'>Add New Item</NavLink>
+              <NavLink tag={RRLink} to='/add-todo'>Add New Item</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

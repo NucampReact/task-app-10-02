@@ -1,6 +1,8 @@
 import React from 'react';
 import TodoList from '../features/todoList/TodoList';
 import SubHeader from '../components/SubHeader';
+import { useSelector } from 'react-redux';
+import { Alert } from 'reactstrap';
 
 /*
   React Component = Function that returns JSX (JavaScript XML [extensible markup language] )
@@ -24,20 +26,39 @@ import SubHeader from '../components/SubHeader';
   - Happens at the time of render (i.e. <App />)
 */
 function Home() {
+
+  // Read the data from Redux Store -- count all my tasks
+  // Special hook to read data -- useSelector()
+  const activeTasks = useSelector(function(state) {
+    // select what you need from the state
+    return state.tasks.filter(task => !task.completed);
+  });
+
+  const completedTasks = useSelector(function(state) {
+    // select what you need from the state
+    return state.tasks.filter(task => task.completed);
+  });
+
+  const totalTasks = activeTasks.length + completedTasks.length;
+
+  console.log('My Active Tasks Are', activeTasks);
+  console.log('My Completed Tasks Are', completedTasks);
+
   return (
     <div className='App'>
       <SubHeader current='Home' />
+      <Alert color='info'>Total Tasks: {totalTasks}</Alert>
       <TodoList
         title='My Active List'
         showNewButton={true}
         completed={false}
-        items={['Do Laundry', 'Clean Room']}
+        items={activeTasks}
       />
       <TodoList
         title='Completed List'
         showNewButton={false}
         completed={true}
-        items={['Take Out Trash', 'Make Dinner']}
+        items={completedTasks}
       />
     </div>
   );

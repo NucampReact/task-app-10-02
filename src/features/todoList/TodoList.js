@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Row,
@@ -34,6 +35,7 @@ import {
 function TodoList({ title, showNewButton, completed, items: todoItems }) {
   const [addedItem, setAddedItem] = useState(false);
   const [newItem, setNewItem] = useState();
+  const dispatcher = useDispatch();
 
   // Get items based on active or completed
   const [items, setItems] = useState(todoItems);
@@ -50,29 +52,43 @@ function TodoList({ title, showNewButton, completed, items: todoItems }) {
     setNewItem('');
   };
 
+  const markItemAsCompleted = (event) => {
+    let taskTitle = event.target.value;
+
+    // Dispatch an action to update the task to completed
+    let action = {
+      type: 'complete-task',
+      taskTitle: taskTitle
+    }
+    dispatcher(action);
+  }
+
   // Render a list of items within a card
   const showItems = () => {
-    // loop over items, and return an array of JSX
-    let completedClass = '';
-    let checkClass = '';
-    let isChecked = false;
-    if (completed) {
-      completedClass = 'text-muted';
-      isChecked = true;
-      checkClass = 'bg-secondary border-secondary';
-    }
+    
 
     const jsxItems = items.map(function (item) {
+      // loop over items, and return an array of JSX
+      let completedClass = '';
+      let checkClass = '';
+      let isChecked = false;
+      if (item.completed) {
+        completedClass = 'text-muted';
+        isChecked = true;
+        checkClass = 'bg-secondary border-secondary';
+      }
+
       return (
-        <li key={item} className={`${completedClass} list-group-item`}>
+        <li key={item.title} className={`${completedClass} list-group-item`}>
           <input
-            onChange={() => {}}
+            onChange={markItemAsCompleted}
+            value={item.title}
             className={`${checkClass} form-check-input`}
             type='checkbox'
             checked={isChecked}
           />
-          <Link to={`/todo/${item}`}>
-            <span className='ms-3'>{item}</span>
+          <Link to={`/todo/${item.title}`}>
+            <span className='ms-3'>{item.title}</span>
           </Link>
         </li>
       );

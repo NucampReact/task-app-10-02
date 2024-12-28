@@ -11,59 +11,63 @@ import TodoList from './features/todoList/TodoList';
 import TodoItem from './features/todoList/TodoItem';
 import SubHeader from './components/SubHeader';
 import AddTodoForm from './features/todoList/AddTodoForm';
+import { Provider } from 'react-redux';
+import MyStore from './redux/Store';
 
 /*
   Preparing the React Tree into your HTML document
 */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    {/*I am trying to get the footer to push to the bottom with bootstrap making the min height of the element 100vh but its not working. */}
-    <Navigation />
+  <Provider store={MyStore}>
+    <BrowserRouter>
+      {/*I am trying to get the footer to push to the bottom with bootstrap making the min height of the element 100vh but its not working. */}
+      <Navigation />
 
-    <Container className='mt-3'>
-      {/* Create Routes (pages) */}
-      <Routes>
-        <Route
-          path='/'
-          element={<Home />}
-        />
-        <Route
-          path='/active-items'
-          element={
-            <>
-              <SubHeader current='Active Items' />
-              <TodoList
-                title='My Active List'
-                showNewButton={true}
-                completed={false}
-                items={['Do Laundry', 'Clean Room']}
-              />
-            </>
-          }
-        />
-        <Route
-          path='/completed-items'
-          element={
-            <>
-              <SubHeader current='Completed Items' />
-              <TodoList
-                title='Completed List'
-                showNewButton={false}
-                completed={true}
-                items={['Take Out Trash', 'Make Dinner']}
-              />
-            </>
-          }
-        />
+      <Container className='mt-3'>
+        {/* Create Routes (pages) */}
+        <Routes>
+          <Route
+            path='/'
+            element={<Home />}
+          />
+          <Route
+            path='/active-items'
+            element={
+              <>
+                <SubHeader current='Active Items' />
+                <TodoList
+                  title='My Active List'
+                  showNewButton={true}
+                  completed={false}
+                  items={['Do Laundry', 'Clean Room']}
+                />
+              </>
+            }
+          />
+          <Route
+            path='/completed-items'
+            element={
+              <>
+                <SubHeader current='Completed Items' />
+                <TodoList
+                  title='Completed List'
+                  showNewButton={false}
+                  completed={true}
+                  items={['Take Out Trash', 'Make Dinner']}
+                />
+              </>
+            }
+          />
 
-        <Route path="/add-todo" element={<AddTodoForm />} />
-        <Route
-          path='/todo/:itemName'
-          element={<TodoItem />}
-        />
-      </Routes>
-      <Footer />
-    </Container>
-  </BrowserRouter>
+          <Route path="/add-todo" element={<AddTodoForm />} />
+          <Route
+            path='/todo/:itemName'
+            element={<TodoItem />}
+          />
+        </Routes>
+        <Footer />
+      </Container>
+    </BrowserRouter>
+  </Provider>
 );
