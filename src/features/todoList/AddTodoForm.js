@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, CardBody, CardHeader, CardFooter, Form, FormGroup, Input, Label, Button } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardFooter, Form, FormGroup, Input, Label, Button, Alert } from 'reactstrap';
 
 function AddTodoForm() {
   // Capture all of the form data into our state
   const [ formData, setFormData ] = useState({});
   const [ disableButton, setDisableButton ] = useState(false);
   const dispatcher = useDispatch();
+  const [alertMessage, setAlertMessage] = useState();
 
   // { name: 'Do Homework', description: '', due_date: 'mm/dd/yyyy', ... }
 
@@ -31,7 +32,7 @@ function AddTodoForm() {
 
   useEffect(function() {
     // Restrict title to only 10 characters
-    let regex = /^[a-zA-Z]{1,10}$/;
+    let regex = /^[a-zA-Z\s]{1,50}$/;
 
     if (!regex.test(formData.title)) {
       setDisableButton(true);
@@ -48,12 +49,29 @@ function AddTodoForm() {
 
   const createItem = () => {
     // Send the task to redux reducer
-    const action = {
-      type: 'create-todo-item',
-      task: formData
-    };
+    // const action = {
+    //   type: 'create-todo-item',
+    //   task: formData
+    // };
 
-    dispatcher(action);
+    // dispatcher(action);
+
+    // save directly to database
+    fetch('http://localhost:3001/tasks', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(function() {
+        console.log('Successfully saved task')
+      })
+      .catch(function() {
+
+      })
+
+    setAlertMessage('Task item was successfully created');
   };
 
   const handleInput = (event) => {
@@ -72,6 +90,7 @@ function AddTodoForm() {
     <Card>
       <CardHeader>Add New Item</CardHeader>
       <CardBody>
+        {alertMessage && <Alert color="success">{alertMessage}</Alert>}
         <Form>
           <FormGroup>
             <Label>Title</Label>

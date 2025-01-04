@@ -13,6 +13,8 @@ import SubHeader from './components/SubHeader';
 import AddTodoForm from './features/todoList/AddTodoForm';
 import { Provider } from 'react-redux';
 import MyStore from './redux/Store';
+import ActiveItems from './pages/ActiveItems';
+import CompletedItems from './pages/CompletedItems';
 
 /*
   Preparing the React Tree into your HTML document
@@ -33,31 +35,11 @@ root.render(
           />
           <Route
             path='/active-items'
-            element={
-              <>
-                <SubHeader current='Active Items' />
-                <TodoList
-                  title='My Active List'
-                  showNewButton={true}
-                  completed={false}
-                  items={['Do Laundry', 'Clean Room']}
-                />
-              </>
-            }
+            element={<ActiveItems />}
           />
           <Route
             path='/completed-items'
-            element={
-              <>
-                <SubHeader current='Completed Items' />
-                <TodoList
-                  title='Completed List'
-                  showNewButton={false}
-                  completed={true}
-                  items={['Take Out Trash', 'Make Dinner']}
-                />
-              </>
-            }
+            element={<CompletedItems />}
           />
 
           <Route path="/add-todo" element={<AddTodoForm />} />

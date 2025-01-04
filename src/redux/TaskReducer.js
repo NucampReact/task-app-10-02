@@ -24,6 +24,8 @@ function TaskReducer(state = initialState, action) {
 
     return newState;
 
+  } else if (action.type === 'load-tasks') {
+    return { ...state, tasks: action.tasks }
   } else {
     return initialState;
   }

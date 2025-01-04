@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -40,6 +40,10 @@ function TodoList({ title, showNewButton, completed, items: todoItems }) {
   // Get items based on active or completed
   const [items, setItems] = useState(todoItems);
 
+  useEffect(() => {
+    setItems(todoItems)
+  }, [todoItems])
+
   const addNewItem = () => {
     setAddedItem(true); // provide updated value as argument
     // console.log('Changing addItem to true', addedItem);
@@ -63,10 +67,16 @@ function TodoList({ title, showNewButton, completed, items: todoItems }) {
     dispatcher(action);
   }
 
+  const deleteTask = (task) => {
+    fetch(`http://localhost:3001/tasks/${task.id}`, {
+      method: 'DELETE'
+    })
+      .then()
+      .catch()
+  }
+
   // Render a list of items within a card
   const showItems = () => {
-    
-
     const jsxItems = items.map(function (item) {
       // loop over items, and return an array of JSX
       let completedClass = '';
@@ -88,8 +98,9 @@ function TodoList({ title, showNewButton, completed, items: todoItems }) {
             checked={isChecked}
           />
           <Link to={`/todo/${item.title}`}>
-            <span className='ms-3'>{item.title}</span>
+            <span className='ms-3'>{item.title}</span>&nbsp;&nbsp;
           </Link>
+          <Button onClick={() => deleteTask(item)} color="danger" size="sm">Delete</Button>
         </li>
       );
     });

@@ -3,6 +3,8 @@ import TodoList from '../features/todoList/TodoList';
 import SubHeader from '../components/SubHeader';
 import { useSelector } from 'react-redux';
 import { Alert } from 'reactstrap';
+import ActiveItems from './ActiveItems';
+import CompletedItems from './CompletedItems';
 
 /*
   React Component = Function that returns JSX (JavaScript XML [extensible markup language] )
@@ -48,18 +50,8 @@ function Home() {
     <div className='App'>
       <SubHeader current='Home' />
       <Alert color='info'>Total Tasks: {totalTasks}</Alert>
-      <TodoList
-        title='My Active List'
-        showNewButton={true}
-        completed={false}
-        items={activeTasks}
-      />
-      <TodoList
-        title='Completed List'
-        showNewButton={false}
-        completed={true}
-        items={completedTasks}
-      />
+      <ActiveItems />
+      <CompletedItems />
     </div>
   );
 }
